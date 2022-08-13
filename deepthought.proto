@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package deepthought;
 
-option go_package = "./";
+option go_package = "github.com/ktny/study-grpc/go/deepthought";
 
 // 各メソッドにつき、RequestとResponseの定義をそれぞれ行う
 message BootRequest {}

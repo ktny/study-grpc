@@ -59,3 +59,23 @@
 | バイナリデータ                 | 扱える                       | 扱える         | [実装次第][graphql-binary] |
 | 最大メッセージサイズ           | デフォルト 4 MiB, 最大 4 GiB | 仕様上はなし   | 仕様上はなし               |
 
+
+## 本リポジトリでの使い方
+
+### 準備
+
+[Quick start | Go | gRPC](https://grpc.io/docs/languages/go/quickstart/)
+
+```sh
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
+
+### protoファイルをコンパイル
+
+```sh
+protoc -I. -Iinclude --go_out=module=github.com/ktny/study-grpc:. deepthought.proto
+protoc -I. -Iinclude --go-grpc_out=module=github.com/ktny/study-grpc:. deepthought.proto
+```
+
