@@ -83,14 +83,14 @@
 
 ```proto
 message GreetingCard {
-int32 id = 1;
-oneof message {
-    string text = 2;
-    Image image = 3;
-    Video video = 4;
-}
-message Image {...}
-message Video {...}
+    int32 id = 1;
+    oneof message {
+        string text = 2;
+        Image image = 3;
+        Video video = 4;
+    }
+    message Image {...}
+    message Video {...}
 }
 ```
 
