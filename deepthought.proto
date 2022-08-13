@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package deepthought;
+
+// 各メソッドにつき、RequestとResponseの定義をそれぞれ行う
+message BootRequest {}
+message BootResponse {
+    string message = 1; // フィールドには1以上の識別子が必要
+}
+
+message InferRequest {
+    string query = 1;
+}
+message InferResponse {
+    sint64 answer = 1; // sintは符号付き整数で負の数を効率よくエンコードする
+    repeated string description = 2; // repeatedをつけると配列を渡せる
+}
+
+// grpcのサービスの大枠
+service Compute {
+    // ストリームレスポンスにする（不定長の連続したデータを渡せる）
+    rpc Boot(BootRequest) returns (stream BootResponse);
+    rpc Infer(InferRequest) returns (InferResponse);
+}
