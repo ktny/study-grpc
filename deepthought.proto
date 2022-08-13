@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package deepthought;
 
+option go_package = "./";
+
 // 各メソッドにつき、RequestとResponseの定義をそれぞれ行う
 message BootRequest {}
 message BootResponse {
