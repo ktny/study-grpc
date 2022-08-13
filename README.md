@@ -59,6 +59,47 @@
 | バイナリデータ                 | 扱える                       | 扱える         | [実装次第][graphql-binary] |
 | 最大メッセージサイズ           | デフォルト 4 MiB, 最大 4 GiB | 仕様上はなし   | 仕様上はなし               |
 
+## Protocol Buffers
+
+- service
+    - APIにおけるサービスを定義する。サービスには複数のRPCメソッドを定義できる
+- message
+    - プログラミング言語の構造体やクラスに変換される概念
+    - フィールドにはスカラ型とmessage型を扱うことができる
+- タグナンバー
+	- フィールド識別のため同じメッセージ内で一意である必要がある
+	- 一度使ったタグナンバーは再利用せず廃盤にする必要がある
+-  repeated
+	- 配列を表現できる。スカラ型、メッセージ型どちらでも使える
+- enum
+	- 列挙型を定義できる
+	- 要素の先頭は必ず`UNKNOWN = 0` である必要がある
+	- `option allow_alias = true`で同じ値を異なるラベルに割り当てられる
+- マップ
+	- `map<key_type, value_type> map_field = N`
+	- キーにできるのは整数値、文字列、真偽値のみ
+- oneof
+	- フィールドの先頭にoneofと付与することで「複数の型の中からどれかひとつ」という定義をできる
+
+```proto
+message GreetingCard {
+int32 id = 1;
+oneof message {
+    string text = 2;
+    Image image = 3;
+    Video video = 4;
+}
+message Image {...}
+message Video {...}
+}
+```
+
+- Well Known Types
+	- Googleが定義した便利なメッセージ型
+	    - `google.protobuf.Timestamp`: 日時を表す型
+	    - `google.protobuf.Duration`: 期間を表す型
+	    - `google.protobuf.Empty`: 特に値を返す必要がない場合
+	    - `google.protobuf.Any`: 明示的に定義されていない型
 
 ## 本リポジトリでの使い方
 
@@ -78,4 +119,3 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 protoc -I. -Iinclude --go_out=module=github.com/ktny/study-grpc:. deepthought.proto
 protoc -I. -Iinclude --go-grpc_out=module=github.com/ktny/study-grpc:. deepthought.proto
 ```
-
